@@ -315,7 +315,7 @@ const Wheel = () => {
         >
           Spin
         </button> */}
-        <WheelComponent participants={participants.split('\n')} handleRandomize={handleRandomize}/>
+        <WheelComponent participants={participants.split('\n').filter(name => name.trim() !== '')} handleRandomize={handleRandomize}/>
       </div>
     </div>
   );
