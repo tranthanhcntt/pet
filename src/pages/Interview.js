@@ -8,7 +8,7 @@ const Interview = () => {
   const [answer, setAnswer] = useState('');
 
   useEffect(() => {
-    fetch("/assets/files/interview.json")
+    fetch("/pet/assets/files/interview.json")
       .then(response => response.json())
       .then(data => {
         console.log(data);

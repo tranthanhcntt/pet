@@ -211,6 +211,39 @@ const Wheel = () => {
                       </ul>
                     </div>
                   ))}
+                  <button
+                    onClick={() => {
+                      const textToCopy = groups
+                        .map((group, index) => `Group ${index + 1}: ${group.join(', ')}`)
+                        .join('\n');
+                      navigator.clipboard.writeText(textToCopy).then(() => {
+                        alert('Groups copied to clipboard!');
+                      });
+                    }}
+                    style={{
+                      padding: '10px',
+                      backgroundColor: '#4CAF50',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '5px',
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '5px',
+                    }}
+                  >
+                    <span>Copy Groups</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="white"
+                      width="16px"
+                      height="16px"
+                    >
+                      <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                    </svg>
+                  </button>
                 </div>
               </div>
             </div>

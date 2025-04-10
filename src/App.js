@@ -18,14 +18,14 @@ const App = () => {
       <div className="flex flex-col items-center justify-start min-h-screen bg-gray-100">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/list" element={<ListJP />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/image-to-text" element={<ImageToText />} />
-          <Route path="/interview" element={<Interview />} />
-          <Route path="/note" element={<NoteApp />} />
-          <Route path="/wheel" element={<Wheel />} />
+          <Route path="/pet" element={<Home />} />
+          <Route path="/pet/quiz" element={<Quiz />} />
+          <Route path="/pet/list" element={<ListJP />} />
+          <Route path="/pet/contact" element={<Contact />} />
+          <Route path="/pet/image-to-text" element={<ImageToText />} />
+          <Route path="/pet/interview" element={<Interview />} />
+          <Route path="/pet/note" element={<NoteApp />} />
+          <Route path="/pet/wheel" element={<Wheel />} />
         </Routes>
       </div>
     </Router>

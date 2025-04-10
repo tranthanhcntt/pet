@@ -6,7 +6,7 @@ export default function NoteApp() {
   const [editingIndex, setEditingIndex] = useState(null);
 
   useEffect(() => {
-    fetch("/assets/files/notes.json")
+    fetch("/pet/assets/files/notes.json")
       .then((response) => response.json())
       .then((data) => setNotes(data))
       .catch(() => console.log("No saved notes found"));

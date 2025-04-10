@@ -11,14 +11,14 @@ const Navbar = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navLinks = [
-    { path: "/", label: "Search(JP)" },
-    { path: "/quiz", label: "Quiz(JP)" },
-    { path: "/list", label: "List(JP)" },
-    { path: "/contact", label: "Contact" },
-    { path: "/image-to-text", label: "Img 2 Text" },
-    { path: "/interview", label: "Interview" },
-    { path: "/note", label: "Note" },
-    { path: "/wheel", label: "Wheel" },
+    { path: "/pet", label: "Search(JP)" },
+    { path: "/pet/quiz", label: "Quiz(JP)" },
+    { path: "/pet/list", label: "List(JP)" },
+    { path: "/pet/contact", label: "Contact" },
+    { path: "/pet/image-to-text", label: "Img 2 Text" },
+    { path: "/pet/interview", label: "Interview" },
+    { path: "/pet/note", label: "Note" },
+    { path: "/pet/wheel", label: "Wheel" },
   ];
 
   return (
