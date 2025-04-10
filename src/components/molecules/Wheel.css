@@ -1,0 +1,220 @@
+
+.difficulty-container {
+  width: 100%;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+	background-color: lightgreen;
+}
+.title {
+  text-align: center;
+  display: flex;
+  align-self: center;
+  margin-top: 48px;
+  background-color: orange;
+  border-radius: 12px;
+  padding: 8px;
+  font-size: 48px;
+}
+.hero-div {
+  display: flex;
+  margin: auto;
+  position: relative;
+}
+.wheel {
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 4px solid black;
+}
+.wheel::before {
+  content: "";
+  position: absolute;
+  border: 4px solid rgba(255,255,255,0.1);
+  width: 580px;
+  height: 580px;
+  border-radius: 50%;
+  z-index: 100;
+}
+#inner-wheel {
+  width: 100%;
+  height: 100%;
+  
+  -webkit-transition: all 6s cubic-bezier(0,.99,.4,.99);
+  -moz-transition: all 6 cubic-bezier(0,.99,.4,.99);
+  -o-transition: all 6s cubic-bezier(0,.99,.4,.99);
+  -ms-transition: all 6s cubic-bezier(0,.99,.4,.99);
+  transition: all 6s cubic-bezier(0,.99,.4,.99);
+}
+.wheel div.sec{
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  transform-origin: 0% 100%;
+}
+
+.wheel div.sec .fa {
+  position: relative;
+  z-index: 10000;
+  font-size: 1em;
+  text-align: unset;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 2%;
+  transform-origin: left bottom;
+  display: flex;
+  align-items: flex-start;
+  padding: 55px;
+}
+
+#spin {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -50px 0 0 -50px;
+  border-radius: 50%;
+  box-shadow: rgba(255,255,255, 0.1) 0px 3px 0px;
+  z-index: 100;
+  background: #fff;
+  cursor: pointer;
+  
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none; 
+  -o-user-select: none;
+  user-select: none;
+}
+#spin::after {
+  content:"SPIN";
+  text-align: center;
+  font-size: 28px;
+  letter-spacing: 0.1em;
+  line-height: 100px;
+  color: white;
+  position: relative;
+  z-index: 1000;
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+#spin::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 20px 28px 20px;
+  border-color: transparent transparent #ffffff transparent;
+  top: -20px;
+  left: 28.5px;
+}
+#inner-spin {
+  width: 90px;
+  height: 90px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -45px 0 0 -45px;
+  border-radius: 50%;
+  background: black;
+  z-index: 9;
+  box-shadow:rgba(255,255,255,1) 0px -2px 0px inset, rgba(255,255,255,1) 0px 2px 0px inset,  rgba(0,0,0,0.4) 0px 0px 5px ;
+}
+#spin::active #inner-spin{
+  box-shadow: rgba(255,255,255,0.4) 0px 0px 5px inset;
+}
+
+
+@-webkit-keyframes hh {
+  0%, 100%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+
+  50%{
+    transform: rotate(7deg);
+    -webkit-transform: rotate(7deg);
+  }
+}
+
+@keyframes hh {
+    0%, 100%{
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+
+  50%{
+    transform: rotate(7deg);
+    -webkit-transform: rotate(7deg);
+  }
+}
+
+.spin {
+  -webkit-animation: hh 0.1s; /* Chrome, Safari, Opera */
+  animation: hh 0.1s;
+}
+
+@media (max-width: 992px) {
+  .title {
+    font-size: 36px;
+  }
+  .wheel {
+    width: 550px;
+    height: 550px;
+  }
+  .wheel::before {
+    width: 532px;
+    height: 532px;
+  }
+  #spin::before {
+    left: 28px;
+  }
+}
+
+@media (max-width: 576px) {
+  .title {
+    font-size: 28px;
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .wheel {
+    width: 320px;
+    height: 320px;
+  }
+  .wheel::before {
+    width: 310px;
+    height: 310px;
+  }
+  .wheel div.sec .fa {
+    font-size: 20px;
+  }
+  #spin {
+    width: 60px;
+    height: 60px;
+    margin: -30px 0 0 -30px;
+  }
+  #spin::after {
+    font-size: 16px;
+    line-height: 60px;
+    width: 60px;
+    height: 60px;
+  }
+  #spin::before {
+    border-width: 0 15px 20px 15px;
+    top: -11px;
+    left: 13.5px;
+  }
+  #inner-spin {
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+  }
+}
