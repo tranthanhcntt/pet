@@ -28,6 +28,7 @@ export const WheelComponent = ({ participants = PARTICIPANTS, handleRandomize })
                     MozTransform: `skewY(${-(skew) + 2135 }deg) rotate(${-angle / 2}deg)`,
                     OTransform: `skewY(${-(skew) + 2135 }deg) rotate(${-angle / 2}deg)`,
                     msTransform: `skewY(${-(skew) + 1.5 }deg) rotate(${-angle / 2}deg)`,
+                    padding: `${-0.48 * participants.length + 11.66}rem`
                   }}
                 >
                   {participant.split(' ')[0]}

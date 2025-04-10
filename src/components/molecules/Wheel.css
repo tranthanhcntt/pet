@@ -70,7 +70,7 @@
   transform-origin: left bottom;
   display: flex;
   align-items: flex-start;
-  padding: 55px;
+  padding: 3.5rem;
 }
 
 #spin {
