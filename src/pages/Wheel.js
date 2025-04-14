@@ -349,7 +349,7 @@ const Wheel = () => {
       </div>
       <div style={{ marginTop: '20px', textAlign: 'center' }}>
         <h2 style={{ color: '#FF5722' }}>TeamUp</h2>
-        <p style={{marginBottom: '10px'}}>click sprint button to run Generator</p>
+        <p style={{marginBottom: '10px'}}>click SPIN button to run Generator</p>
         <WheelComponent participants={participants.split('\n').filter(name => name.trim() !== '')} handleRandomize={handleRandomize}/>
       </div>
     </div>
