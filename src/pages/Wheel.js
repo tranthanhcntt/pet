@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { COLOR_CONTRAST, PARTICIPANTS } from '@/constants';
+import React, { useEffect, useState } from 'react';
+import { PARTICIPANTS } from '@/constants';
 import {WheelComponent} from '@/components/molecules/Wheel';
 
 const Wheel = () => {
   const [participants, setParticipants] = useState(PARTICIPANTS);
   const [numGroups, setNumGroups] = useState(5);
   const [groups, setGroups] = useState([]);
+  const [groupNames, setGroupNames] = useState([]);
   const [showModal, setShowModal] = useState(false);
+  const [openSetupNameGroup, setOpenSetupNameGroup] = useState(false);
 
   const handleRandomize = () => {
     console.log('111')
@@ -25,6 +27,7 @@ const Wheel = () => {
     shuffled.forEach((name, index) => {
       newGroups[index % numGroups].push(name);
     });
+    console.log(newGroups)
     setGroups(newGroups);
   };
 
@@ -48,6 +51,29 @@ const Wheel = () => {
     link.click();
   };
 
+  useEffect(() => {
+    console.log(numGroups)
+    setGroupNames((prev) => {
+      const newGroupNames = [...prev];
+      if (newGroupNames.length === 0) {
+        Array.from({ length: numGroups }, (_, index) => {
+          if (newGroupNames[index] === undefined) {
+            newGroupNames[index] = `Group ${index + 1}`;
+          }
+        });
+        return newGroupNames;
+      } else {
+        if (newGroupNames.length < numGroups) {
+          newGroupNames.push(`Group ${newGroupNames.length + 1}`);
+        } else {
+          newGroupNames.splice(numGroups);
+        }
+        return newGroupNames;
+      }
+      
+    });
+  }, [numGroups]);
+
   return (
     <div style={{ padding: '20px', fontFamily: 'Arial, sans-serif', maxWidth: '80vw', margin: '0 auto', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'center', flexWrap: 'wrap' }}>
       
@@ -68,14 +94,16 @@ const Wheel = () => {
             fontSize: '14px',
           }}
         />
-        <div style={{ marginBottom: '15px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ marginBottom: '15px', display: 'flex',  justifyContent: 'space-between', flexDirection: 'column', gap: '10px' }}>
           <label style={{ fontSize: '16px', fontWeight: 'bold' }}>
             Number of Groups:
             <input
               type="number"
               min="2"
               value={numGroups}
-              onChange={(e) => setNumGroups(Number(e.target.value))}
+              onChange={(e) => {
+                setNumGroups(Number(e.target.value))
+              }}
               style={{
                 marginLeft: '10px',
                 width: '60px',
@@ -86,7 +114,48 @@ const Wheel = () => {
               }}
             />
           </label>
+
+          <button
+            onClick={() => setOpenSetupNameGroup(!openSetupNameGroup)}
+            style={{
+              padding: '10px',
+              backgroundColor: '#2196F3',
+              color: 'white',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              fontSize: '16px',
+            }}
+          >
+            {openSetupNameGroup ? 'Hide Group Names' : 'Setup Group Names'}
+          </button>
         </div>
+        {openSetupNameGroup && <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }} >
+          {Array.from({ length: numGroups }, (_, index) => (
+            <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <label style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                Group {index + 1} Name:
+              </label>
+              <input
+                type="text"
+                defaultValue={groupNames[index] || `Group ${index + 1}`}
+                onChange={(e) => {
+                  setGroupNames((prev) => {
+                    prev[index] = e.target.value;
+                    return prev
+                  });
+                }}
+                style={{
+                  flex: 1,
+                  padding: '5px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                  fontSize: '14px',
+                }}
+              />
+            </div>
+          ))}
+        </div>}
         <div style={{ marginTop: '10px', display: 'flex', justifyContent: 'space-between', gap: '10px', marginBottom: '20px' }}>
           {/* <button
             onClick={handleRandomize}
@@ -168,6 +237,8 @@ const Wheel = () => {
                   borderRadius: '10px',
                   maxWidth: '600px',
                   width: '90%',
+                  maxHeight:'80vh',
+                  overflowY: 'auto',
                   boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
                   position: 'relative',
                 }}
@@ -187,34 +258,11 @@ const Wheel = () => {
                   &times;
                 </button>
                 <div style={{ marginTop: '20px' }}>
-                  <h2 style={{ textAlign: 'center', color: '#FF5722' }}>Groups</h2>
-                  {groups.map((group, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        marginBottom: '15px',
-                        padding: '10px',
-                        border: '1px solid #ccc',
-                        borderRadius: '5px',
-                      }}
-                    >
-                      <h3 style={{ color: '#3F51B5' }}>Group {index + 1}</h3>
-                      <ul style={{ paddingLeft: '20px' }}>
-                        {group.map((name, i) => (
-                          <li
-                            key={i}
-                            style={{ fontSize: '14px', lineHeight: '1.5' }}
-                          >
-                            {name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                  <button
+
+                <button
                     onClick={() => {
                       const textToCopy = groups
-                        .map((group, index) => `Group ${index + 1}: ${group.join(', ')}`)
+                        .map((group, index) => `Group ${groupNames[index]}: ${group.join(', ')}`)
                         .join('\n');
                       navigator.clipboard.writeText(textToCopy).then(() => {
                         alert('Groups copied to clipboard!');
@@ -231,6 +279,7 @@ const Wheel = () => {
                       display: 'flex',
                       alignItems: 'center',
                       gap: '5px',
+                      marginBottom: '20px',
                     }}
                   >
                     <span>Copy Groups</span>
@@ -244,77 +293,63 @@ const Wheel = () => {
                       <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
                     </svg>
                   </button>
+                  <h2 style={{ textAlign: 'center', color: '#FF5722' }}>Groups</h2>
+
+                  {groupNames.map((groupName, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        marginBottom: '15px',
+                        padding: '10px',
+                        border: '1px solid #ccc',
+                        borderRadius: '5px',
+                      }}
+                    >
+                      <h3 style={{ color: '#3F51B5' }}>{groupName}</h3>
+                      <div
+                        onDragOver={(e) => e.preventDefault()}
+                        onDrop={(e) => {
+                          e.preventDefault();
+                          const draggedName = e.dataTransfer.getData('text/plain');
+                          const targetGroupIndex = index;
+                          const updatedGroups = groups.map((group, i) =>
+                            i === targetGroupIndex
+                              ? [...group, draggedName]
+                              : group.filter((name) => name !== draggedName)
+                          );
+                          setGroups(updatedGroups);
+                        }}
+                      >
+                        {groups[index].map((name, i) => (
+                          <li
+                            key={i}
+                            draggable
+                            onDragStart={(e) => e.dataTransfer.setData('text/plain', name)}
+                            style={{
+                              fontSize: '14px',
+                              lineHeight: '1.5',
+                              cursor: 'grab',
+                              backgroundColor: '#f9f9f9',
+                              padding: '5px',
+                              marginBottom: '5px',
+                              borderRadius: '3px',
+                              border: '1px solid #ccc',
+                            }}
+                          >
+                            {name}
+                          </li>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           )}
       </div>
       <div style={{ marginTop: '20px', textAlign: 'center' }}>
-        <h2 style={{ color: '#FF5722' }}>Spin the Wheel</h2>
-        {/* <div
-          style={{
-            margin: '0 auto',
-            width: '600px',
-            height: '600px',
-            borderRadius: '50%',
-            border: '5px solid #4CAF50',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            id="wheel"
-            style={{
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              transformOrigin: '50% 50%',
-            }}
-          >
-            {groups.flat().map((name, index) => (
-              <div
-                key={index}
-                style={{
-                  position: 'absolute',
-                  width: '50%',
-                  height: '50%',
-                  backgroundColor: COLOR_CONTRAST[index].background,
-                  transform: `rotate(${(360 / groups.flat().length) * index}deg)`,
-                  transformOrigin: '100% 100%',
-                }}
-              >
-                <span
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%) rotate(-90deg)',
-                    fontSize: '12px',
-                    fontWeight: 'bold',
-                    color: COLOR_CONTRAST[index].text,
-                  }}
-                >
-                  {name.split(' ')[0]}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <button
-          onClick={handleRandomize}
-          style={{
-            marginTop: '20px',
-            padding: '10px 20px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontSize: '16px',
-          }}
-        >
-          Spin
-        </button> */}
+        <h2 style={{ color: '#FF5722' }}>TeamUp</h2>
+        <p style={{marginBottom: '10px'}}>click sprint button to run Generator</p>
         <WheelComponent participants={participants.split('\n').filter(name => name.trim() !== '')} handleRandomize={handleRandomize}/>
       </div>
     </div>

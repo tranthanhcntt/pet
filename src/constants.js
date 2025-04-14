@@ -227,10 +227,10 @@ export const COLOR_CONTRAST = [
 ]
 
 
-export const PARTICIPANTS = `Anh Nguyen Ngoc
+export const PARTICIPANTS = `
+Anh Nguyen Ngoc
 Anh Pham Phuong
 Diep To Ngoc
-Dung Bui Thi Thuy
 Hoa Dai Thi Thuy
 Huyen Nguyen Thi Thanh
 Linh Hoang Hoai
@@ -241,8 +241,6 @@ Quan Bui Anh
 Tam Le Duy
 Thanh Dao Duy
 Thanh Tran Kim
-Thao Do Nguyen Phuong
 Tuan Phan Minh
-Xuan Phan Thi
 Yen Dang Thi
 `
