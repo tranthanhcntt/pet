@@ -4,6 +4,7 @@ export default function NoteApp() {
   const [notes, setNotes] = useState([]);
   const [currentNote, setCurrentNote] = useState("");
   const [editingIndex, setEditingIndex] = useState(null);
+  const [expandedNotes, setExpandedNotes] = useState({}); // Track expanded notes
 
   useEffect(() => {
     fetch("/pet/assets/files/notes.json")
@@ -45,8 +46,24 @@ export default function NoteApp() {
     await writable.close();
   };
 
+  const readContent = async () => {
+    try {
+      const utterance = new SpeechSynthesisUtterance(currentNote);
+      window.speechSynthesis.speak(utterance);
+    } catch (error) {
+      console.error("Error reading file:", error);
+    }
+  };
+
+  const toggleExpand = (index) => {
+    setExpandedNotes((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
   return (
-    <div className="p-4">
+    <div className="p-4 w-full flex flex-col items-center">
       <h1 className="text-xl font-bold mb-4">Note App</h1>
       <textarea
         className="border p-2 w-full"
@@ -60,20 +77,46 @@ export default function NoteApp() {
       <button className="bg-green-500 text-white px-4 py-2 mt-2" onClick={saveToFile}>
         Save to File
       </button>
+      <button className="bg-purple-500 text-white px-4 py-2 mt-2" onClick={readContent}>
+        Read Content
+      </button>
       <ul className="mt-4">
-        {notes.map((note, index) => (
-          <li key={index} className="border p-2 my-2 flex justify-between max-w-lg">
-            <div className="max-w-lg" style={{inlineSize: '23rem', overflowWrap: 'break-word'}}>{note}</div>
-            <div>
-              <button className="text-blue-500 mr-2" onClick={() => editNote(index)}>
-                Edit
-              </button>
-              <button className="text-red-500" onClick={() => deleteNote(index)}>
-                Delete
-              </button>
-            </div>
-          </li>
-        ))}
+        {notes.map((note, index) => {
+          const isExpanded = expandedNotes[index];
+          const noteLines = note.split("\n");
+          const shouldShowSeeMore = noteLines.length > 3;
+
+          return (
+            <li key={index} className="border p-2 my-2 flex flex-col max-w-lg">
+              <div
+                className="max-w-lg"
+                style={{
+                  inlineSize: "23rem",
+                  overflowWrap: "break-word",
+                  whiteSpace: isExpanded ? "pre-wrap" : "pre-line",
+                }}
+              >
+                {isExpanded ? note : noteLines.slice(0, 3).join("\n")}
+              </div>
+              {shouldShowSeeMore && (
+                <button
+                  className="text-blue-500 mt-2 self-start"
+                  onClick={() => toggleExpand(index)}
+                >
+                  {isExpanded ? "See Less" : "See More"}
+                </button>
+              )}
+              <div className="flex justify-end mt-2">
+                <button className="text-blue-500 mr-2" onClick={() => editNote(index)}>
+                  Edit
+                </button>
+                <button className="text-red-500" onClick={() => deleteNote(index)}>
+                  Delete
+                </button>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

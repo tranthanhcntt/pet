@@ -9,6 +9,7 @@ import ListJP from "@/pages/ListJP";
 import Contact from "@/pages/Contact";
 import Interview from "@/pages/Interview";
 import ImageToText from "@/pages/ImageToText";
+import WereWolves from "@/pages/WereWolves";
 
 import Navbar from "@/components/molecules/navbar";
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/pet/interview" element={<Interview />} />
           <Route path="/pet/note" element={<NoteApp />} />
           <Route path="/pet/wheel" element={<Wheel />} />
+          <Route path="/pet/werewolves" element={<WereWolves />} />
         </Routes>
       </div>
     </Router>

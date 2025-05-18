@@ -244,3 +244,20 @@ Thanh Tran Kim
 Tuan Phan Minh
 Yen Dang Thi
 `
+
+export const PLAYERS = [
+  { name: 'Anh Nguyen Ngoc', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Anh Pham Phuong', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Diep To Ngoc', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Hoa Dai Thi Thuy', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Linh Hoang Hoai', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Nam Nguyen Phuong', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Phong Mai Viet', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Quan Bui Anh', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Tam Le Duy', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Thanh Dao Duy', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Thanh Tran Kim', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Tuan Phan Minh', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Yen Dang Thi', role: "Dân", alive: true, powerUsed: false },
+  { name: 'Quynh Huong', role: "Dân", alive: true, powerUsed: false },
+]

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tesseract from "tesseract.js";
 
-const ImageToText = () => {
+export const ImageToText = () => {
   const [image, setImage] = useState(null);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -10,6 +10,18 @@ const ImageToText = () => {
     const file = event.target.files[0];
     if (file) {
       setImage(URL.createObjectURL(file));
+    }
+  };
+
+  const handlePaste = (event) => {
+    const items = event.clipboardData.items;
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].type.startsWith("image/")) {
+        const file = items[i].getAsFile();
+        if (file) {
+          setImage(URL.createObjectURL(file));
+        }
+      }
     }
   };
 
@@ -24,6 +36,13 @@ const ImageToText = () => {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    window.addEventListener("paste", handlePaste);
+    return () => {
+      window.removeEventListener("paste", handlePaste);
+    };
+  }, []);
 
   return (
     <div className="p-4 max-w-lg mx-auto">
